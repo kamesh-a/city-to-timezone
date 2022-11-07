@@ -1,11 +1,18 @@
 {
-  "name": "timezone",
-  "version": "1.0.0",
+  "name": "@kamesh-a/timezone",
+  "version": "0.1.0",
   "main": "./src/cli.mjs",
   "license": "MIT",
   "scripts": {
     "prepare": "husky install",
     "test": "exit 0"
+  },
+  "files": [
+    "src/*",
+    "data/city-structured-and-cleaned-data.json"
+  ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
   },
   "bin": {
     "zone": "./src/cli.mjs"

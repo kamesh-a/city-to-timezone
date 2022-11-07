@@ -6,8 +6,8 @@ import {
     writeToFile
 } from './write-to-file.mjs';
 
-const uncleanCityDataPath = join(process.cwd(), 'data', 'city-clean.json');
-const outputPath = join(process.cwd(), 'data', 'city-structured-and-cleaned-data.json');
+const uncleanCityDataPath = join('../', 'data', 'city-clean.json');
+const outputPath = join('../', 'data', 'city-structured-and-cleaned-data.json');
 const cleanedDataPath = outputPath;
 
 
@@ -16,7 +16,7 @@ async function readInfo(path) {
         const data = await fs.readFile(path);
         return JSON.parse(data.toString('utf8'));
     } catch (error) {
-        console.error(`e: `, e);
+        console.error(`e: `, error);
     }
 }
 

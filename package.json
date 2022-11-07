@@ -1,0 +1,29 @@
+{
+  "name": "timezone",
+  "version": "1.0.0",
+  "main": "./src/cli.mjs",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky install",
+    "test": "exit 1"
+  },
+  "bin": {
+    "zone": "./src/cli.mjs"
+  },
+  "dependencies": {
+    "chalk": "^5.1.2",
+    "commander": "^9.4.1",
+    "conf": "^10.2.0",
+    "countries-and-timezones": "^3.3.0",
+    "country-state-city": "^3.1.2",
+    "csvtojson": "^2.0.10",
+    "flexsearch": "^0.7.31",
+    "fs-extra": "^10.1.0",
+    "g": "^2.0.1"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^17.2.0",
+    "@commitlint/config-conventional": "^17.2.0",
+    "husky": "^8.0.1"
+  }
+}

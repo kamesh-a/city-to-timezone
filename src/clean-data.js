@@ -1,13 +1,14 @@
-import fs from 'fs-extra';
-import {
+const fs = require('fs-extra');
+const {
     join
-} from 'path';
-import {
+} = require('path');
+const {
     writeToFile
-} from './write-to-file.mjs';
+} = require('./write-to-file.js');
 
-const uncleanCityDataPath = join('../', 'data', 'city-clean.json');
-const outputPath = join('../', 'data', 'city-structured-and-cleaned-data.json');
+
+const uncleanCityDataPath = join(__dirname, '../', 'data', 'city-clean.json');
+const outputPath = join(__dirname, '../', 'data', 'city-structured-and-cleaned-data.json');
 const cleanedDataPath = outputPath;
 
 
@@ -77,8 +78,9 @@ async function cleanDataBasedOnPopulation(no = 2) {
     }
 }
 
-export async function getCityInfo(cityName) {
+async function getCityInfo(cityName) {
     try {
+        // console.log(`read file path : ${cleanedDataPath}`)
         const cityObj = await readInfo(cleanedDataPath);
         if (cityName) {
             console.log(cityObj[cityName.toLowerCase()])
@@ -93,4 +95,8 @@ export async function getCityInfo(cityName) {
 // Step - 2: Clean data based on no of max counts for attrition in cities get them based on last 2 hightest population
 // cleanDataBasedOnPopulation(2);
 // Step - 3: Use flexisearch get the entries for searching
-// await getCityInfo('chennai')
+// getCityInfo('chennai')
+
+module.exports = {
+    getCityInfo
+};

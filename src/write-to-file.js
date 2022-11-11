@@ -1,9 +1,15 @@
-import { outputFile } from 'fs-extra';
+const {
+    outputFile
+} = require('fs-extra');
 
-export async function writeToFile(path, content ) {
+async function writeToFile(path, content) {
     try {
         await outputFile(path, content)
     } catch (error) {
         console.log(`Error in writing a file `, e, path);
     }
+}
+
+module.exports = {
+    writeToFile
 }

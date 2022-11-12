@@ -21,7 +21,7 @@ const { isTerminal } = require('./util.js');
 async function citySearch(city) {
 
     if( isTerminal() ) { 
-        const chalkCity = chalk.bgRed.bold(`${city}`)
+        const chalkCity = chalk.bgGreen.bold(`${city}`)
         console.log(`${chalk.bgWhiteBright.bold('City we are searching for : ')}[${chalkCity}]`);
     }
     

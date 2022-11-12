@@ -1,6 +1,6 @@
 {
   "name": "@kamesh-a/timezone",
-  "version": "0.1.6",
+  "version": "0.1.12",
   "main": "./src/cli.js",
   "license": "MIT",
   "scripts": {
@@ -30,8 +30,8 @@
     "countries-and-timezones": "^3.3.0",
     "country-state-city": "^3.1.2",
     "csvtojson": "^2.0.10",
-    "husky": "^8.0.1",
-    "fs-extra": "^10.1.0"
+    "fs-extra": "^10.1.0",
+    "husky": "^8.0.1"
   },
   "private": false
 }

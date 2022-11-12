@@ -4,6 +4,8 @@ const {
     Index
 } = require('flexsearch');
 
+const { getCountryForTimezone } = require('countries-and-timezones');
+
 const workerOptions = {
     preset: 'performance',
     tokenize: 'forward',
@@ -19,6 +21,8 @@ const {
 } = require('./cron-data');
 
 console.time(`city-data-indexing`);
+
+// Contains cityNames & countryNames in array.
 const cityArray = [...cityToTimezone.keys(), ...countryToTimeZone.keys()];
 
 function indexDocuments() {
@@ -31,29 +35,58 @@ function indexDocuments() {
     }
 }
 
+// City Map to get timezone in an array.
 function getTimeZoneForCity(city) {
-    if(cityToTimezone.has(city)) {
-        return cityToTimezone.get(city);
+    if (cityToTimezone.has(city)) {
+        return {
+            tz: cityToTimezone.get(city),
+            isCity: true,
+            isCountry: false
+        }
     }
 }
 
+// Country Map to get timezone in an array.
 function getTimeZoneForCountry(city) {
-    if(countryToTimeZone.has(city)) {
-        return countryToTimeZone.get(city);
+    if (countryToTimeZone.has(city)) {
+        return {
+            tz: countryToTimeZone.get(city),
+            isCity: false,
+            isCountry: true
+        }
     }
-    return "not found"
+    return {
+        err: true,
+        isCity: false,
+        isCountry: false,
+        tz: 'not found'
+    }
 }
 
+/**
+ * 
+ * @param {*} city : string
+ * @param {*} limit : number
+ * @returns { tz: [],
+        location: string,
+        isCity: boolean,
+        isCountry: boolean,
+        err: boolean
+    }
+ */
 function searchCity(city, limit = 3) {
     try {
-        const records = flex.search(city, { limit });
-        const slicedRecords = records.slice(0,limit);
-        if( slicedRecords ) {
+        const records = flex.search(city, {
+            limit
+        });
+        const slicedRecords = records.slice(0, limit);
+        if (slicedRecords) {
             const results = slicedRecords.map((v) => {
                 const city = cityArray[v];
+                const tzInfo = getTimeZoneForCity(city) || getTimeZoneForCountry(city)
                 return {
-                    city,
-                    tz: getTimeZoneForCity(city) || getTimeZoneForCountry(city)
+                    location: city,
+                    ...tzInfo
                 }
             });
             return results;
@@ -63,11 +96,19 @@ function searchCity(city, limit = 3) {
     }
 }
 
+function getCountryByTz( tzName , deprecated = false ) {
+    if( tzName ) {
+        return getCountryForTimezone(tzName, {
+            deprecated
+        });
+    }
+}
+
 indexDocuments();
 console.timeEnd(`city-data-indexing`);
 
 // console.time(`search-time`);
-// console.log(searchCity('chen'))
+// console.log(searchCity('Australia'))
 // console.log(searchCity('Turkey'))
 // console.log(searchCity('Morocco'))
 // console.log(searchCity('Cyprus'))
@@ -75,5 +116,6 @@ console.timeEnd(`city-data-indexing`);
 // console.timeEnd(`search-time`);
 
 module.exports = {
-    searchCity
+    searchCity,
+    getCountryByTz
 }

@@ -1,10 +1,5 @@
 const {
-    format,
-    formatInTimeZone,
-    getTimezoneOffset,
-    toDate,
-    zonedTimeToUtc,
-    utcToZonedTime
+    formatInTimeZone
 } = require('date-fns-tz');
 
 function getShortName(timeZoneAbbrevation) {
@@ -15,10 +10,16 @@ function getShortName(timeZoneAbbrevation) {
     }
 }
 
-function convertToTimeZone(timeZoneArrList, print=true) {
+/**
+ * Convert a specific date to a particular timezone.
+ * @param {*} timeZoneArrList = ["Europe/London", "America/New_York", ...]
+ * @param {*} print = Should we print the result set
+ * @param {*} date = Provide date in case server based timezone
+ * @returns 
+ */
+function convertToTimeZone(timeZoneArrList, print=true, date = new Date()) {
     const zones = [...timeZoneArrList];
-    const date = new Date();
-    const format = 'HH:mm:ss [zzzz]';
+    const format = 'yyyy-MM-dd hh:mm:ss aaa [zzzz]';
     const results = zones.map(zone => {
         return {
             zone,
